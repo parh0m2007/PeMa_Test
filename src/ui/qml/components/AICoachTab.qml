@@ -253,25 +253,106 @@ Rectangle {
                         anchors { fill: parent; margins: 14 }
                         spacing: 10
                         Label { text: "Будущий план"; color: textPrimary; font.pixelSize: 15; font.weight: Font.Black }
-                        Repeater {
-                            model: report.actions || []
-                            delegate: Rectangle {
-                                Layout.fillWidth: true
-                                height: 64
-                                radius: 8
-                                color: surface2
-                                border.width: 1
-                                border.color: borderCol
-                                RowLayout {
-                                    anchors { fill: parent; margins: 10 }
-                                    spacing: 10
-                                    Label { text: modelData.date; color: textMuted; font.pixelSize: 11; Layout.preferredWidth: 78 }
-                                    ColumnLayout {
-                                        Layout.fillWidth: true
-                                        spacing: 2
-                                        Label { text: modelData.title; color: textPrimary; font.pixelSize: 13; font.weight: Font.DemiBold; elide: Text.ElideRight; Layout.fillWidth: true }
-                                        Label { text: modelData.distanceKm + " км · " + modelData.durationMin + " мин · " + intensityText(modelData.intensity); color: textMuted; font.pixelSize: 11 }
+                        
+                        // Goals context section
+                        Loader {
+                            Layout.fillWidth: true
+                            active: report.summary && report.summary.activeGoals && report.summary.activeGoals.length > 0
+                            sourceComponent: ColumnLayout {
+                                spacing: 6
+                                Label { 
+                                    text: "Цели атлета:"; 
+                                    color: accent; 
+                                    font.pixelSize: 12; 
+                                    font.weight: Font.DemiBold 
+                                }
+                                Repeater {
+                                    model: report.summary.activeGoals || []
+                                    delegate: RowLayout {
+                                        spacing: 6
+                                        Rectangle {
+                                            width: 4; height: 16; radius: 2
+                                            color: modelData.daysLeft && modelData.daysLeft < 30 ? "#f59e0b" : runColor
+                                        }
+                                        Label { 
+                                            text: modelData.title + (modelData.daysLeft ? " · " + modelData.daysLeft + " дн." : ""); 
+                                            color: textMuted; 
+                                            font.pixelSize: 11;
+                                            elide: Text.ElideRight
+                                            Layout.fillWidth: true
+                                        }
                                     }
+                                }
+                            }
+                        }
+                        
+                        // Success/failure patterns
+                        Loader {
+                            Layout.fillWidth: true
+                            active: report.summary && (report.summary.successPatterns || []).length > 0
+                            sourceComponent: ColumnLayout {
+                                spacing: 4
+                                Label { 
+                                    text: "Успешные паттерны:"; 
+                                    color: runColor; 
+                                    font.pixelSize: 11; 
+                                    font.weight: Font.DemiBold 
+                                }
+                                Repeater {
+                                    model: report.summary.successPatterns || []
+                                    delegate: Label { 
+                                        text: "• " + modelData; 
+                                        color: textMuted; 
+                                        font.pixelSize: 10;
+                                        wrapMode: Text.Wrap
+                                        Layout.fillWidth: true
+                                    }
+                                }
+                            }
+                        }
+                        
+                        // Scrollable actions list with fixed height
+                        ScrollView {
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: 180
+                            clip: true
+                            ScrollBar.vertical.policy: ScrollBar.AsNeeded
+                            
+                            ColumnLayout {
+                                width: parent.width
+                                spacing: 6
+                                
+                                Repeater {
+                                    model: report.actions || []
+                                    delegate: Rectangle {
+                                        Layout.fillWidth: true
+                                        height: 64
+                                        radius: 8
+                                        color: surface2
+                                        border.width: 1
+                                        border.color: borderCol
+                                        RowLayout {
+                                            anchors { fill: parent; margins: 10 }
+                                            spacing: 10
+                                            Label { text: modelData.date; color: textMuted; font.pixelSize: 11; Layout.preferredWidth: 78 }
+                                            ColumnLayout {
+                                                Layout.fillWidth: true
+                                                spacing: 2
+                                                Label { text: modelData.title; color: textPrimary; font.pixelSize: 13; font.weight: Font.DemiBold; elide: Text.ElideRight; Layout.fillWidth: true }
+                                                Label { text: modelData.distanceKm + " км · " + modelData.durationMin + " мин · " + intensityText(modelData.intensity); color: textMuted; font.pixelSize: 11 }
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                                // Empty state inside ScrollView
+                                Label {
+                                    visible: !(report.actions && report.actions.length)
+                                    text: "Нет запланированных действий. Нажмите «Обновить» для анализа."
+                                    color: textMuted
+                                    wrapMode: Text.Wrap
+                                    Layout.fillWidth: true
+                                    Layout.margins: 10
                                 }
                             }
                         }
