@@ -34,6 +34,11 @@ DATABASE_URL = "sqlite:///./pema.db"
 OLLAMA_CLOUD_HOST = os.getenv("OLLAMA_CLOUD_HOST", "https://ollama.com")
 OLLAMA_CLOUD_MODEL = os.getenv("OLLAMA_CLOUD_MODEL", "kimi-k2.6")
 
+# ─── AI Report Cache ─────────────────────────────────────────────────────────
+# Simple in-memory cache for AI coach reports to avoid regenerating on every request
+_AI_REPORT_CACHE: dict[str, tuple[dict, float]] = {}  # {athlete_id: (report, timestamp)}
+_AI_REPORT_CACHE_TTL_SECONDS = int(os.getenv("AI_REPORT_CACHE_TTL", "3600"))  # default 1 hour
+
 
 def _ollama_model_candidates() -> list[str]:
     configured = [m.strip() for m in OLLAMA_CLOUD_MODEL.split(",") if m.strip()]
@@ -1298,7 +1303,7 @@ def _try_ollama_cloud_report(athlete_id: str, db: Session, fallback: dict, horiz
         },
         "constraints": [
             f"Plan only dates after {Date.today().isoformat()} and within {horizon_days} days.",
-            "Return 3 to 7 actions.",
+            "Return 3 to 14 actions (flexible amount based on athlete state).",
             "Use realistic progressive load and at least one easy/recovery day if risk is medium or high.",
             "intervalsJson must be a JSON string.",
         ],
@@ -1446,7 +1451,45 @@ def _try_ollama_cloud_chat(athlete_id: str, db: Session, message: str, report: d
         return None
 
 
-def _build_ai_coach_report(athlete_id: str, db: Session, horizon_days: int = 14) -> dict:
+def _get_cached_ai_report(athlete_id: str) -> Optional[dict]:
+    """Get cached AI report if it exists and is not expired."""
+    import time
+    if athlete_id in _AI_REPORT_CACHE:
+        report, timestamp = _AI_REPORT_CACHE[athlete_id]
+        if time.time() - timestamp < _AI_REPORT_CACHE_TTL_SECONDS:
+            return report
+        else:
+            # Cache expired, remove it
+            del _AI_REPORT_CACHE[athlete_id]
+    return None
+
+
+def _cache_ai_report(athlete_id: str, report: dict) -> None:
+    """Cache AI report with current timestamp."""
+    import time
+    _AI_REPORT_CACHE[athlete_id] = (report, time.time())
+
+
+def _build_ai_coach_report(athlete_id: str, db: Session, horizon_days: int = 14, use_cache: bool = True) -> dict:
+    """Build AI coach report with optional caching."""
+    # Try to get from cache first
+    if use_cache:
+        cached = _get_cached_ai_report(athlete_id)
+        if cached:
+            return cached
+    
+    # Build fresh report
+    report = _build_ai_coach_report_fresh(athlete_id, db, horizon_days)
+    
+    # Cache the result
+    if use_cache:
+        _cache_ai_report(athlete_id, report)
+    
+    return report
+
+
+def _build_ai_coach_report_fresh(athlete_id: str, db: Session, horizon_days: int = 14) -> dict:
+    """Build fresh AI coach report without caching (internal use)."""
     today = Date.today()
     window_start = today - timedelta(days=56)
     workouts = db.query(WorkoutDB).filter(
@@ -1695,7 +1738,9 @@ def _build_ai_coach_report(athlete_id: str, db: Session, horizon_days: int = 14)
         "actions": actions,
         "templates": templates,
     }
-    return _try_ollama_cloud_report(athlete_id, db, local_report, horizon_days) or local_report
+    # Try Ollama Cloud for enhanced report, fallback to local report
+    cloud_report = _try_ollama_cloud_report(athlete_id, db, local_report, horizon_days)
+    return cloud_report if cloud_report else local_report
 
 
 @app.get("/api/ai/coach/analysis")
