@@ -253,6 +253,64 @@ Rectangle {
                         anchors { fill: parent; margins: 14 }
                         spacing: 10
                         Label { text: "Будущий план"; color: textPrimary; font.pixelSize: 15; font.weight: Font.Black }
+                        
+                        // Goals context section
+                        Loader {
+                            Layout.fillWidth: true
+                            active: report.summary && report.summary.activeGoals && report.summary.activeGoals.length > 0
+                            sourceComponent: ColumnLayout {
+                                spacing: 6
+                                Label { 
+                                    text: "Цели атлета:"; 
+                                    color: accent; 
+                                    font.pixelSize: 12; 
+                                    font.weight: Font.DemiBold 
+                                }
+                                Repeater {
+                                    model: report.summary.activeGoals || []
+                                    delegate: RowLayout {
+                                        spacing: 6
+                                        Rectangle {
+                                            width: 4; height: 16; radius: 2
+                                            color: modelData.daysLeft && modelData.daysLeft < 30 ? "#f59e0b" : runColor
+                                        }
+                                        Label { 
+                                            text: modelData.title + (modelData.daysLeft ? " · " + modelData.daysLeft + " дн." : ""); 
+                                            color: textMuted; 
+                                            font.pixelSize: 11;
+                                            elide: Text.ElideRight
+                                            Layout.fillWidth: true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                        // Success/failure patterns
+                        Loader {
+                            Layout.fillWidth: true
+                            active: report.summary && (report.summary.successPatterns || []).length > 0
+                            sourceComponent: ColumnLayout {
+                                spacing: 4
+                                Label { 
+                                    text: "Успешные паттерны:"; 
+                                    color: runColor; 
+                                    font.pixelSize: 11; 
+                                    font.weight: Font.DemiBold 
+                                }
+                                Repeater {
+                                    model: report.summary.successPatterns || []
+                                    delegate: Label { 
+                                        text: "• " + modelData; 
+                                        color: textMuted; 
+                                        font.pixelSize: 10;
+                                        wrapMode: Text.Wrap
+                                        Layout.fillWidth: true
+                                    }
+                                }
+                            }
+                        }
+                        
                         Repeater {
                             model: report.actions || []
                             delegate: Rectangle {
@@ -274,6 +332,15 @@ Rectangle {
                                     }
                                 }
                             }
+                        }
+                        
+                        // Empty state
+                        Label {
+                            visible: !(report.actions && report.actions.length)
+                            text: "Нет запланированных действий. Нажмите «Обновить» для анализа."
+                            color: textMuted
+                            wrapMode: Text.Wrap
+                            Layout.fillWidth: true
                         }
                     }
                 }

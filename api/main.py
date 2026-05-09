@@ -1274,7 +1274,9 @@ def _try_ollama_cloud_report(athlete_id: str, db: Session, fallback: dict, horiz
         "Analyze athlete progress and return only valid JSON. "
         "Do not include markdown. Do not include medical diagnosis. "
         "If pain, injury, extreme fatigue, or high RPE appears, reduce load and recommend coach review. "
-        "Use Russian text for titles, notes, and recommendations."
+        "Use Russian text for titles, notes, and recommendations. "
+        "Consider athlete's goals when making recommendations - align training with their target events. "
+        "Pay attention to success/failure patterns: build on what works, avoid what fails."
     )
     user_prompt = {
         "task": "Create training-plan corrections for the next days.",
@@ -1302,6 +1304,9 @@ def _try_ollama_cloud_report(athlete_id: str, db: Session, fallback: dict, horiz
         ],
         "fallbackSignalReport": fallback,
         "workouts": workout_rows,
+        "athleteGoals": fallback.get("summary", {}).get("activeGoals", []),
+        "successPatterns": fallback.get("summary", {}).get("successPatterns", []),
+        "failurePatterns": fallback.get("summary", {}).get("failurePatterns", []),
     }
 
     try:
@@ -1397,6 +1402,8 @@ def _try_ollama_cloud_chat(athlete_id: str, db: Session, message: str, report: d
         "You are an AI assistant for a sports coach inside a training planning app. "
         "Answer in Russian. Be concrete and operational. "
         "Use athlete data and current plan context. "
+        "Consider athlete's goals when making recommendations - align training with their target events. "
+        "Pay attention to success/failure patterns: build on what works, avoid what fails. "
         "You may suggest corrections to workload, intensity, rest, templates, and calendar scheduling. "
         "Do not diagnose medical conditions; if pain or injury risk appears, advise reducing load and coach/medical review. "
         "Keep the answer concise: current state, reasoning, suggested corrections, next step."
@@ -1407,6 +1414,9 @@ def _try_ollama_cloud_chat(athlete_id: str, db: Session, message: str, report: d
         "horizonDays": horizon_days,
         "currentAiReport": report,
         "recentWorkouts": _recent_workout_context(athlete_id, db),
+        "athleteGoals": report.get("summary", {}).get("activeGoals", []),
+        "successPatterns": report.get("summary", {}).get("successPatterns", []),
+        "failurePatterns": report.get("summary", {}).get("failurePatterns", []),
     }
 
     try:
@@ -1443,10 +1453,99 @@ def _build_ai_coach_report(athlete_id: str, db: Session, horizon_days: int = 14)
         WorkoutDB.athlete_id == athlete_id,
         WorkoutDB.date >= window_start.isoformat(),
     ).order_by(WorkoutDB.date).all()
+    
+    # Load athlete goals for context
+    from sqlalchemy.orm import joinedload
+    goals = db.query(GoalDB).filter(
+        GoalDB.athlete_id == athlete_id,
+        GoalDB.completed_at.is_(None),
+    ).order_by(GoalDB.target_date).all()
+    
+    goals_context = []
+    for g in goals:
+        try:
+            tgt = Date.fromisoformat(g.target_date)
+            days_left = (tgt - today).days
+        except Exception:
+            days_left = None
+        goals_context.append({
+            "title": g.title,
+            "type": g.type,
+            "targetDate": g.target_date,
+            "daysLeft": days_left,
+            "targetValue": g.target_value,
+            "targetUnit": g.target_unit,
+        })
 
     done = [w for w in workouts if w.status == "done"]
     planned = [w for w in workouts if w.status == "planned" and w.date >= today.isoformat()]
     skipped = [w for w in workouts if w.status == "skipped"]
+    
+    # Analyze success/failure patterns
+    success_patterns = []
+    failure_patterns = []
+    
+    # Group workouts by week to identify patterns
+    weekly_success_rate = {}
+    for w in workouts:
+        d = _parse_iso_date(w.date)
+        if not d:
+            continue
+        week_key = d.strftime("%Y-W%W")
+        if week_key not in weekly_success_rate:
+            weekly_success_rate[week_key] = {"done": 0, "skipped": 0, "total": 0}
+        weekly_success_rate[week_key]["total"] += 1
+        if w.status == "done":
+            weekly_success_rate[week_key]["done"] += 1
+        elif w.status == "skipped":
+            weekly_success_rate[week_key]["skipped"] += 1
+    
+    # Identify successful weeks (>=80% completion)
+    for week, stats in weekly_success_rate.items():
+        if stats["total"] >= 2:
+            rate = stats["done"] / stats["total"]
+            if rate >= 0.8:
+                success_patterns.append(f"Неделя {week}: выполнение {round(rate*100)}%")
+            elif rate < 0.5:
+                failure_patterns.append(f"Неделя {week}: выполнение {round(rate*100)}% (низкое)")
+    
+    # Analyze what types of workouts are most often completed vs skipped
+    category_completion = {}
+    intensity_completion = {}
+    for w in workouts:
+        cat = w.category
+        intensity = w.intensity
+        if cat not in category_completion:
+            category_completion[cat] = {"done": 0, "skipped": 0}
+        if intensity not in intensity_completion:
+            intensity_completion[intensity] = {"done": 0, "skipped": 0}
+        
+        if w.status == "done":
+            category_completion[cat]["done"] += 1
+            intensity_completion[intensity]["done"] += 1
+        elif w.status == "skipped":
+            category_completion[cat]["skipped"] += 1
+            intensity_completion[intensity]["skipped"] += 1
+    
+    # Find best performing categories/intensities
+    for cat, stats in category_completion.items():
+        total = stats["done"] + stats["skipped"]
+        if total >= 3:
+            rate = stats["done"] / total
+            if rate >= 0.75:
+                success_patterns.append(f"{cat}: выполнение {round(rate*100)}% (успешный тип)")
+            elif rate < 0.5:
+                failure_patterns.append(f"{cat}: выполнение {round(rate*100)}% (часто пропускается)")
+    
+    for intensity, stats in intensity_completion.items():
+        total = stats["done"] + stats["skipped"]
+        if total >= 3:
+            rate = stats["done"] / total
+            if rate >= 0.75:
+                success_patterns.append(f"{intensity}: выполнение {round(rate*100)}% (комфортная интенсивность)")
+            elif rate < 0.5:
+                failure_patterns.append(f"{intensity}: выполнение {round(rate*100)}% (часто пропускается)")
+    
     total_distance = sum(_effective_distance(w) for w in done)
     total_duration = sum(_effective_duration(w) for w in done)
     avg_rpe_values = [w.perceived_exertion for w in done if w.perceived_exertion]
@@ -1588,6 +1687,9 @@ def _build_ai_coach_report(athlete_id: str, db: Session, horizon_days: int = 14)
             "previousWeekKm": round(previous_week, 1),
             "loadJump": load_jump,
             "painSignal": has_pain_signal,
+            "successPatterns": success_patterns,
+            "failurePatterns": failure_patterns,
+            "activeGoals": goals_context,
         },
         "recommendations": recommendations,
         "actions": actions,
