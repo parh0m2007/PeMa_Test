@@ -311,36 +311,50 @@ Rectangle {
                             }
                         }
                         
-                        Repeater {
-                            model: report.actions || []
-                            delegate: Rectangle {
-                                Layout.fillWidth: true
-                                height: 64
-                                radius: 8
-                                color: surface2
-                                border.width: 1
-                                border.color: borderCol
-                                RowLayout {
-                                    anchors { fill: parent; margins: 10 }
-                                    spacing: 10
-                                    Label { text: modelData.date; color: textMuted; font.pixelSize: 11; Layout.preferredWidth: 78 }
-                                    ColumnLayout {
+                        // Scrollable actions list with fixed height
+                        ScrollView {
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: 180
+                            clip: true
+                            ScrollBar.vertical.policy: ScrollBar.AsNeeded
+                            
+                            ColumnLayout {
+                                width: parent.width
+                                spacing: 6
+                                
+                                Repeater {
+                                    model: report.actions || []
+                                    delegate: Rectangle {
                                         Layout.fillWidth: true
-                                        spacing: 2
-                                        Label { text: modelData.title; color: textPrimary; font.pixelSize: 13; font.weight: Font.DemiBold; elide: Text.ElideRight; Layout.fillWidth: true }
-                                        Label { text: modelData.distanceKm + " км · " + modelData.durationMin + " мин · " + intensityText(modelData.intensity); color: textMuted; font.pixelSize: 11 }
+                                        height: 64
+                                        radius: 8
+                                        color: surface2
+                                        border.width: 1
+                                        border.color: borderCol
+                                        RowLayout {
+                                            anchors { fill: parent; margins: 10 }
+                                            spacing: 10
+                                            Label { text: modelData.date; color: textMuted; font.pixelSize: 11; Layout.preferredWidth: 78 }
+                                            ColumnLayout {
+                                                Layout.fillWidth: true
+                                                spacing: 2
+                                                Label { text: modelData.title; color: textPrimary; font.pixelSize: 13; font.weight: Font.DemiBold; elide: Text.ElideRight; Layout.fillWidth: true }
+                                                Label { text: modelData.distanceKm + " км · " + modelData.durationMin + " мин · " + intensityText(modelData.intensity); color: textMuted; font.pixelSize: 11 }
+                                            }
+                                        }
                                     }
                                 }
+                                
+                                // Empty state inside ScrollView
+                                Label {
+                                    visible: !(report.actions && report.actions.length)
+                                    text: "Нет запланированных действий. Нажмите «Обновить» для анализа."
+                                    color: textMuted
+                                    wrapMode: Text.Wrap
+                                    Layout.fillWidth: true
+                                    Layout.margins: 10
+                                }
                             }
-                        }
-                        
-                        // Empty state
-                        Label {
-                            visible: !(report.actions && report.actions.length)
-                            text: "Нет запланированных действий. Нажмите «Обновить» для анализа."
-                            color: textMuted
-                            wrapMode: Text.Wrap
-                            Layout.fillWidth: true
                         }
                     }
                 }
