@@ -16,6 +16,7 @@
 	[
 		"C:/PeMa-firstver/src/ui/qml/RouteTab.qml",
 		"C:/PeMa-firstver/src/ui/qml/main.qml",
+		"C:/PeMa-firstver/src/ui/qml/components/AICoachTab.qml",
 		"C:/PeMa-firstver/src/ui/qml/components/AnalyticsCharts.qml",
 		"C:/PeMa-firstver/src/ui/qml/components/ErrorBanner.qml",
 		"C:/PeMa-firstver/src/ui/qml/components/GoalDialog.qml",
@@ -31,6 +32,7 @@
 	[
 		"C:/PeMa-firstver/src/ui/qml/RouteTab.qml",
 		"C:/PeMa-firstver/src/ui/qml/main.qml",
+		"C:/PeMa-firstver/src/ui/qml/components/AICoachTab.qml",
 		"C:/PeMa-firstver/src/ui/qml/components/AnalyticsCharts.qml",
 		"C:/PeMa-firstver/src/ui/qml/components/ErrorBanner.qml",
 		"C:/PeMa-firstver/src/ui/qml/components/GoalDialog.qml",
@@ -46,6 +48,7 @@
 	[
 		"C:/PeMa-firstver/src/ui/qml/RouteTab.qml",
 		"C:/PeMa-firstver/src/ui/qml/main.qml",
+		"C:/PeMa-firstver/src/ui/qml/components/AICoachTab.qml",
 		"C:/PeMa-firstver/src/ui/qml/components/AnalyticsCharts.qml",
 		"C:/PeMa-firstver/src/ui/qml/components/ErrorBanner.qml",
 		"C:/PeMa-firstver/src/ui/qml/components/GoalDialog.qml",
@@ -61,6 +64,7 @@
 	[
 		"C:/PeMa-firstver/src/ui/qml/RouteTab.qml",
 		"C:/PeMa-firstver/src/ui/qml/main.qml",
+		"C:/PeMa-firstver/src/ui/qml/components/AICoachTab.qml",
 		"C:/PeMa-firstver/src/ui/qml/components/AnalyticsCharts.qml",
 		"C:/PeMa-firstver/src/ui/qml/components/ErrorBanner.qml",
 		"C:/PeMa-firstver/src/ui/qml/components/GoalDialog.qml",

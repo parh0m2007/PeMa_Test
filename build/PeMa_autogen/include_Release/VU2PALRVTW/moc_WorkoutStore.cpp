@@ -59,6 +59,12 @@ template <> constexpr inline auto WorkoutStore::qt_create_metaobjectdata<qt_meta
         "selectedWorkoutChanged",
         "selectedWorkoutCommentsChanged",
         "analyticsChanged",
+        "aiCoachReportChanged",
+        "aiCoachPlanApplied",
+        "createdWorkouts",
+        "createdTemplates",
+        "aiCoachChatReply",
+        "message",
         "analyticsPeriodChanged",
         "goalsChanged",
         "routesChanged",
@@ -72,7 +78,6 @@ template <> constexpr inline auto WorkoutStore::qt_create_metaobjectdata<qt_meta
         "draftChanged",
         "viewModeChanged",
         "errorChanged",
-        "message",
         "busyChanged",
         "workoutCreated",
         "initialLoad",
@@ -122,6 +127,10 @@ template <> constexpr inline auto WorkoutStore::qt_create_metaobjectdata<qt_meta
         "deleteTemplate",
         "planFromTemplate",
         "templateId",
+        "analyzeAthleteProgress",
+        "horizonDays",
+        "applyAiCoachPlan",
+        "sendAiCoachMessage",
         "canCurrentUserEditAthlete",
         "athleteId",
         "clearError",
@@ -168,6 +177,7 @@ template <> constexpr inline auto WorkoutStore::qt_create_metaobjectdata<qt_meta
         "QVariantMap",
         "selectedWorkoutComments",
         "analyticsSummary",
+        "aiCoachReport",
         "analyticsPeriod",
         "goals",
         "routes",
@@ -224,254 +234,286 @@ template <> constexpr inline auto WorkoutStore::qt_create_metaobjectdata<qt_meta
         QtMocHelpers::SignalData<void()>(18, 2, QMC::AccessPublic, QMetaType::Void),
         // Signal 'analyticsChanged'
         QtMocHelpers::SignalData<void()>(19, 2, QMC::AccessPublic, QMetaType::Void),
-        // Signal 'analyticsPeriodChanged'
+        // Signal 'aiCoachReportChanged'
         QtMocHelpers::SignalData<void()>(20, 2, QMC::AccessPublic, QMetaType::Void),
+        // Signal 'aiCoachPlanApplied'
+        QtMocHelpers::SignalData<void(int, int)>(21, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::Int, 22 }, { QMetaType::Int, 23 },
+        }}),
+        // Signal 'aiCoachChatReply'
+        QtMocHelpers::SignalData<void(const QString &)>(24, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::QString, 25 },
+        }}),
+        // Signal 'analyticsPeriodChanged'
+        QtMocHelpers::SignalData<void()>(26, 2, QMC::AccessPublic, QMetaType::Void),
         // Signal 'goalsChanged'
-        QtMocHelpers::SignalData<void()>(21, 2, QMC::AccessPublic, QMetaType::Void),
+        QtMocHelpers::SignalData<void()>(27, 2, QMC::AccessPublic, QMetaType::Void),
         // Signal 'routesChanged'
-        QtMocHelpers::SignalData<void()>(22, 2, QMC::AccessPublic, QMetaType::Void),
+        QtMocHelpers::SignalData<void()>(28, 2, QMC::AccessPublic, QMetaType::Void),
         // Signal 'openAiKeyChanged'
-        QtMocHelpers::SignalData<void()>(23, 2, QMC::AccessPublic, QMetaType::Void),
+        QtMocHelpers::SignalData<void()>(29, 2, QMC::AccessPublic, QMetaType::Void),
         // Signal 'stravaStatusChanged'
-        QtMocHelpers::SignalData<void()>(24, 2, QMC::AccessPublic, QMetaType::Void),
+        QtMocHelpers::SignalData<void()>(30, 2, QMC::AccessPublic, QMetaType::Void),
         // Signal 'stravaSyncDone'
-        QtMocHelpers::SignalData<void(int)>(25, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { QMetaType::Int, 26 },
+        QtMocHelpers::SignalData<void(int)>(31, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::Int, 32 },
         }}),
         // Signal 'serverUrlChanged'
-        QtMocHelpers::SignalData<void()>(27, 2, QMC::AccessPublic, QMetaType::Void),
+        QtMocHelpers::SignalData<void()>(33, 2, QMC::AccessPublic, QMetaType::Void),
         // Signal 'templatesChanged'
-        QtMocHelpers::SignalData<void()>(28, 2, QMC::AccessPublic, QMetaType::Void),
+        QtMocHelpers::SignalData<void()>(34, 2, QMC::AccessPublic, QMetaType::Void),
         // Signal 'createDialogOpenChanged'
-        QtMocHelpers::SignalData<void()>(29, 2, QMC::AccessPublic, QMetaType::Void),
+        QtMocHelpers::SignalData<void()>(35, 2, QMC::AccessPublic, QMetaType::Void),
         // Signal 'draftChanged'
-        QtMocHelpers::SignalData<void()>(30, 2, QMC::AccessPublic, QMetaType::Void),
+        QtMocHelpers::SignalData<void()>(36, 2, QMC::AccessPublic, QMetaType::Void),
         // Signal 'viewModeChanged'
-        QtMocHelpers::SignalData<void()>(31, 2, QMC::AccessPublic, QMetaType::Void),
+        QtMocHelpers::SignalData<void()>(37, 2, QMC::AccessPublic, QMetaType::Void),
         // Signal 'errorChanged'
-        QtMocHelpers::SignalData<void(const QString &)>(32, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { QMetaType::QString, 33 },
+        QtMocHelpers::SignalData<void(const QString &)>(38, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::QString, 25 },
         }}),
         // Signal 'busyChanged'
-        QtMocHelpers::SignalData<void()>(34, 2, QMC::AccessPublic, QMetaType::Void),
+        QtMocHelpers::SignalData<void()>(39, 2, QMC::AccessPublic, QMetaType::Void),
         // Signal 'workoutCreated'
-        QtMocHelpers::SignalData<void()>(35, 2, QMC::AccessPublic, QMetaType::Void),
+        QtMocHelpers::SignalData<void()>(40, 2, QMC::AccessPublic, QMetaType::Void),
         // Slot 'initialLoad'
-        QtMocHelpers::SlotData<void()>(36, 2, QMC::AccessPrivate, QMetaType::Void),
+        QtMocHelpers::SlotData<void()>(41, 2, QMC::AccessPrivate, QMetaType::Void),
         // Method 'loginUser'
-        QtMocHelpers::MethodData<void(const QString &, const QString &)>(37, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { QMetaType::QString, 38 }, { QMetaType::QString, 39 },
+        QtMocHelpers::MethodData<void(const QString &, const QString &)>(42, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::QString, 43 }, { QMetaType::QString, 44 },
         }}),
         // Method 'registerUser'
-        QtMocHelpers::MethodData<void(const QString &, const QString &, const QString &, const QString &)>(40, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { QMetaType::QString, 38 }, { QMetaType::QString, 41 }, { QMetaType::QString, 39 }, { QMetaType::QString, 42 },
+        QtMocHelpers::MethodData<void(const QString &, const QString &, const QString &, const QString &)>(45, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::QString, 43 }, { QMetaType::QString, 46 }, { QMetaType::QString, 44 }, { QMetaType::QString, 47 },
         }}),
         // Method 'logout'
-        QtMocHelpers::MethodData<void()>(43, 2, QMC::AccessPublic, QMetaType::Void),
-        // Method 'clearAuthError'
-        QtMocHelpers::MethodData<void()>(44, 2, QMC::AccessPublic, QMetaType::Void),
-        // Method 'linkAthlete'
-        QtMocHelpers::MethodData<void(const QString &)>(45, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { QMetaType::QString, 46 },
-        }}),
-        // Method 'goToToday'
-        QtMocHelpers::MethodData<void()>(47, 2, QMC::AccessPublic, QMetaType::Void),
-        // Method 'prevMonth'
         QtMocHelpers::MethodData<void()>(48, 2, QMC::AccessPublic, QMetaType::Void),
-        // Method 'nextMonth'
+        // Method 'clearAuthError'
         QtMocHelpers::MethodData<void()>(49, 2, QMC::AccessPublic, QMetaType::Void),
-        // Method 'selectDate'
+        // Method 'linkAthlete'
         QtMocHelpers::MethodData<void(const QString &)>(50, 2, QMC::AccessPublic, QMetaType::Void, {{
             { QMetaType::QString, 51 },
         }}),
+        // Method 'goToToday'
+        QtMocHelpers::MethodData<void()>(52, 2, QMC::AccessPublic, QMetaType::Void),
+        // Method 'prevMonth'
+        QtMocHelpers::MethodData<void()>(53, 2, QMC::AccessPublic, QMetaType::Void),
+        // Method 'nextMonth'
+        QtMocHelpers::MethodData<void()>(54, 2, QMC::AccessPublic, QMetaType::Void),
+        // Method 'selectDate'
+        QtMocHelpers::MethodData<void(const QString &)>(55, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::QString, 56 },
+        }}),
         // Method 'openCreateDialogForDate'
-        QtMocHelpers::MethodData<void(const QString &)>(52, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { QMetaType::QString, 51 },
+        QtMocHelpers::MethodData<void(const QString &)>(57, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::QString, 56 },
         }}),
         // Method 'cancelCreateDialog'
-        QtMocHelpers::MethodData<void()>(53, 2, QMC::AccessPublic, QMetaType::Void),
+        QtMocHelpers::MethodData<void()>(58, 2, QMC::AccessPublic, QMetaType::Void),
         // Method 'createWorkout'
-        QtMocHelpers::MethodData<bool(const QString &, const QString &, double, int, const QString &, const QString &, bool, const QString &)>(54, 2, QMC::AccessPublic, QMetaType::Bool, {{
-            { QMetaType::QString, 55 }, { QMetaType::QString, 56 }, { QMetaType::Double, 57 }, { QMetaType::Int, 58 },
-            { QMetaType::QString, 59 }, { QMetaType::QString, 60 }, { QMetaType::Bool, 61 }, { QMetaType::QString, 62 },
-        }}),
-        // Method 'createWorkout'
-        QtMocHelpers::MethodData<bool(const QString &, const QString &, double, int, const QString &, const QString &, bool)>(54, 2, QMC::AccessPublic | QMC::MethodCloned, QMetaType::Bool, {{
-            { QMetaType::QString, 55 }, { QMetaType::QString, 56 }, { QMetaType::Double, 57 }, { QMetaType::Int, 58 },
-            { QMetaType::QString, 59 }, { QMetaType::QString, 60 }, { QMetaType::Bool, 61 },
+        QtMocHelpers::MethodData<bool(const QString &, const QString &, double, int, const QString &, const QString &, bool, const QString &)>(59, 2, QMC::AccessPublic, QMetaType::Bool, {{
+            { QMetaType::QString, 60 }, { QMetaType::QString, 61 }, { QMetaType::Double, 62 }, { QMetaType::Int, 63 },
+            { QMetaType::QString, 64 }, { QMetaType::QString, 65 }, { QMetaType::Bool, 66 }, { QMetaType::QString, 67 },
         }}),
         // Method 'createWorkout'
-        QtMocHelpers::MethodData<bool(const QString &, const QString &, double, int, const QString &, const QString &)>(54, 2, QMC::AccessPublic | QMC::MethodCloned, QMetaType::Bool, {{
-            { QMetaType::QString, 55 }, { QMetaType::QString, 56 }, { QMetaType::Double, 57 }, { QMetaType::Int, 58 },
-            { QMetaType::QString, 59 }, { QMetaType::QString, 60 },
+        QtMocHelpers::MethodData<bool(const QString &, const QString &, double, int, const QString &, const QString &, bool)>(59, 2, QMC::AccessPublic | QMC::MethodCloned, QMetaType::Bool, {{
+            { QMetaType::QString, 60 }, { QMetaType::QString, 61 }, { QMetaType::Double, 62 }, { QMetaType::Int, 63 },
+            { QMetaType::QString, 64 }, { QMetaType::QString, 65 }, { QMetaType::Bool, 66 },
+        }}),
+        // Method 'createWorkout'
+        QtMocHelpers::MethodData<bool(const QString &, const QString &, double, int, const QString &, const QString &)>(59, 2, QMC::AccessPublic | QMC::MethodCloned, QMetaType::Bool, {{
+            { QMetaType::QString, 60 }, { QMetaType::QString, 61 }, { QMetaType::Double, 62 }, { QMetaType::Int, 63 },
+            { QMetaType::QString, 64 }, { QMetaType::QString, 65 },
         }}),
         // Method 'updateWorkout'
-        QtMocHelpers::MethodData<bool(const QString &, const QString &, const QString &, double, int, const QString &, const QString &, bool, const QString &)>(63, 2, QMC::AccessPublic, QMetaType::Bool, {{
-            { QMetaType::QString, 64 }, { QMetaType::QString, 55 }, { QMetaType::QString, 56 }, { QMetaType::Double, 57 },
-            { QMetaType::Int, 58 }, { QMetaType::QString, 59 }, { QMetaType::QString, 60 }, { QMetaType::Bool, 61 },
-            { QMetaType::QString, 62 },
+        QtMocHelpers::MethodData<bool(const QString &, const QString &, const QString &, double, int, const QString &, const QString &, bool, const QString &)>(68, 2, QMC::AccessPublic, QMetaType::Bool, {{
+            { QMetaType::QString, 69 }, { QMetaType::QString, 60 }, { QMetaType::QString, 61 }, { QMetaType::Double, 62 },
+            { QMetaType::Int, 63 }, { QMetaType::QString, 64 }, { QMetaType::QString, 65 }, { QMetaType::Bool, 66 },
+            { QMetaType::QString, 67 },
         }}),
         // Method 'updateWorkout'
-        QtMocHelpers::MethodData<bool(const QString &, const QString &, const QString &, double, int, const QString &, const QString &, bool)>(63, 2, QMC::AccessPublic | QMC::MethodCloned, QMetaType::Bool, {{
-            { QMetaType::QString, 64 }, { QMetaType::QString, 55 }, { QMetaType::QString, 56 }, { QMetaType::Double, 57 },
-            { QMetaType::Int, 58 }, { QMetaType::QString, 59 }, { QMetaType::QString, 60 }, { QMetaType::Bool, 61 },
+        QtMocHelpers::MethodData<bool(const QString &, const QString &, const QString &, double, int, const QString &, const QString &, bool)>(68, 2, QMC::AccessPublic | QMC::MethodCloned, QMetaType::Bool, {{
+            { QMetaType::QString, 69 }, { QMetaType::QString, 60 }, { QMetaType::QString, 61 }, { QMetaType::Double, 62 },
+            { QMetaType::Int, 63 }, { QMetaType::QString, 64 }, { QMetaType::QString, 65 }, { QMetaType::Bool, 66 },
         }}),
         // Method 'updateWorkout'
-        QtMocHelpers::MethodData<bool(const QString &, const QString &, const QString &, double, int, const QString &, const QString &)>(63, 2, QMC::AccessPublic | QMC::MethodCloned, QMetaType::Bool, {{
-            { QMetaType::QString, 64 }, { QMetaType::QString, 55 }, { QMetaType::QString, 56 }, { QMetaType::Double, 57 },
-            { QMetaType::Int, 58 }, { QMetaType::QString, 59 }, { QMetaType::QString, 60 },
+        QtMocHelpers::MethodData<bool(const QString &, const QString &, const QString &, double, int, const QString &, const QString &)>(68, 2, QMC::AccessPublic | QMC::MethodCloned, QMetaType::Bool, {{
+            { QMetaType::QString, 69 }, { QMetaType::QString, 60 }, { QMetaType::QString, 61 }, { QMetaType::Double, 62 },
+            { QMetaType::Int, 63 }, { QMetaType::QString, 64 }, { QMetaType::QString, 65 },
         }}),
         // Method 'deleteWorkout'
-        QtMocHelpers::MethodData<bool(const QString &)>(65, 2, QMC::AccessPublic, QMetaType::Bool, {{
-            { QMetaType::QString, 64 },
+        QtMocHelpers::MethodData<bool(const QString &)>(70, 2, QMC::AccessPublic, QMetaType::Bool, {{
+            { QMetaType::QString, 69 },
         }}),
         // Method 'selectWorkout'
-        QtMocHelpers::MethodData<void(const QString &)>(66, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { QMetaType::QString, 64 },
+        QtMocHelpers::MethodData<void(const QString &)>(71, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::QString, 69 },
         }}),
         // Method 'addComment'
-        QtMocHelpers::MethodData<bool(const QString &)>(67, 2, QMC::AccessPublic, QMetaType::Bool, {{
-            { QMetaType::QString, 68 },
+        QtMocHelpers::MethodData<bool(const QString &)>(72, 2, QMC::AccessPublic, QMetaType::Bool, {{
+            { QMetaType::QString, 73 },
         }}),
         // Method 'markWorkoutStatus'
-        QtMocHelpers::MethodData<bool(const QString &, const QString &, const QString &)>(69, 2, QMC::AccessPublic, QMetaType::Bool, {{
-            { QMetaType::QString, 70 }, { QMetaType::QString, 71 }, { QMetaType::QString, 72 },
+        QtMocHelpers::MethodData<bool(const QString &, const QString &, const QString &)>(74, 2, QMC::AccessPublic, QMetaType::Bool, {{
+            { QMetaType::QString, 75 }, { QMetaType::QString, 76 }, { QMetaType::QString, 77 },
         }}),
         // Method 'markWorkoutStatusDetailed'
-        QtMocHelpers::MethodData<bool(const QString &, const QString &, const QString &, const QString &, int)>(73, 2, QMC::AccessPublic, QMetaType::Bool, {{
-            { QMetaType::QString, 70 }, { QMetaType::QString, 71 }, { QMetaType::QString, 72 }, { QMetaType::QString, 74 },
-            { QMetaType::Int, 75 },
+        QtMocHelpers::MethodData<bool(const QString &, const QString &, const QString &, const QString &, int)>(78, 2, QMC::AccessPublic, QMetaType::Bool, {{
+            { QMetaType::QString, 75 }, { QMetaType::QString, 76 }, { QMetaType::QString, 77 }, { QMetaType::QString, 79 },
+            { QMetaType::Int, 80 },
         }}),
         // Method 'saveTemplate'
-        QtMocHelpers::MethodData<bool(const QString &, const QString &, double, int, const QString &, const QString &, const QString &, const QString &)>(76, 2, QMC::AccessPublic, QMetaType::Bool, {{
-            { QMetaType::QString, 55 }, { QMetaType::QString, 56 }, { QMetaType::Double, 57 }, { QMetaType::Int, 58 },
-            { QMetaType::QString, 59 }, { QMetaType::QString, 77 }, { QMetaType::QString, 60 }, { QMetaType::QString, 78 },
+        QtMocHelpers::MethodData<bool(const QString &, const QString &, double, int, const QString &, const QString &, const QString &, const QString &)>(81, 2, QMC::AccessPublic, QMetaType::Bool, {{
+            { QMetaType::QString, 60 }, { QMetaType::QString, 61 }, { QMetaType::Double, 62 }, { QMetaType::Int, 63 },
+            { QMetaType::QString, 64 }, { QMetaType::QString, 82 }, { QMetaType::QString, 65 }, { QMetaType::QString, 83 },
         }}),
         // Method 'updateTemplate'
-        QtMocHelpers::MethodData<bool(const QString &, const QString &, const QString &, double, int, const QString &, const QString &, const QString &, const QString &)>(79, 2, QMC::AccessPublic, QMetaType::Bool, {{
-            { QMetaType::QString, 64 }, { QMetaType::QString, 55 }, { QMetaType::QString, 56 }, { QMetaType::Double, 57 },
-            { QMetaType::Int, 58 }, { QMetaType::QString, 59 }, { QMetaType::QString, 77 }, { QMetaType::QString, 60 },
-            { QMetaType::QString, 78 },
+        QtMocHelpers::MethodData<bool(const QString &, const QString &, const QString &, double, int, const QString &, const QString &, const QString &, const QString &)>(84, 2, QMC::AccessPublic, QMetaType::Bool, {{
+            { QMetaType::QString, 69 }, { QMetaType::QString, 60 }, { QMetaType::QString, 61 }, { QMetaType::Double, 62 },
+            { QMetaType::Int, 63 }, { QMetaType::QString, 64 }, { QMetaType::QString, 82 }, { QMetaType::QString, 65 },
+            { QMetaType::QString, 83 },
         }}),
         // Method 'deleteTemplate'
-        QtMocHelpers::MethodData<bool(const QString &)>(80, 2, QMC::AccessPublic, QMetaType::Bool, {{
-            { QMetaType::QString, 64 },
+        QtMocHelpers::MethodData<bool(const QString &)>(85, 2, QMC::AccessPublic, QMetaType::Bool, {{
+            { QMetaType::QString, 69 },
         }}),
         // Method 'planFromTemplate'
-        QtMocHelpers::MethodData<bool(const QString &, const QString &)>(81, 2, QMC::AccessPublic, QMetaType::Bool, {{
-            { QMetaType::QString, 82 }, { QMetaType::QString, 51 },
+        QtMocHelpers::MethodData<bool(const QString &, const QString &)>(86, 2, QMC::AccessPublic, QMetaType::Bool, {{
+            { QMetaType::QString, 87 }, { QMetaType::QString, 56 },
+        }}),
+        // Method 'analyzeAthleteProgress'
+        QtMocHelpers::MethodData<void(int)>(88, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::Int, 89 },
+        }}),
+        // Method 'analyzeAthleteProgress'
+        QtMocHelpers::MethodData<void()>(88, 2, QMC::AccessPublic | QMC::MethodCloned, QMetaType::Void),
+        // Method 'applyAiCoachPlan'
+        QtMocHelpers::MethodData<void(int)>(90, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::Int, 89 },
+        }}),
+        // Method 'applyAiCoachPlan'
+        QtMocHelpers::MethodData<void()>(90, 2, QMC::AccessPublic | QMC::MethodCloned, QMetaType::Void),
+        // Method 'sendAiCoachMessage'
+        QtMocHelpers::MethodData<void(const QString &, int)>(91, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::QString, 25 }, { QMetaType::Int, 89 },
+        }}),
+        // Method 'sendAiCoachMessage'
+        QtMocHelpers::MethodData<void(const QString &)>(91, 2, QMC::AccessPublic | QMC::MethodCloned, QMetaType::Void, {{
+            { QMetaType::QString, 25 },
         }}),
         // Method 'canCurrentUserEditAthlete'
-        QtMocHelpers::MethodData<bool(const QString &) const>(83, 2, QMC::AccessPublic, QMetaType::Bool, {{
-            { QMetaType::QString, 84 },
+        QtMocHelpers::MethodData<bool(const QString &) const>(92, 2, QMC::AccessPublic, QMetaType::Bool, {{
+            { QMetaType::QString, 93 },
         }}),
         // Method 'clearError'
-        QtMocHelpers::MethodData<void()>(85, 2, QMC::AccessPublic, QMetaType::Void),
+        QtMocHelpers::MethodData<void()>(94, 2, QMC::AccessPublic, QMetaType::Void),
         // Method 'refresh'
-        QtMocHelpers::MethodData<void()>(86, 2, QMC::AccessPublic, QMetaType::Void),
+        QtMocHelpers::MethodData<void()>(95, 2, QMC::AccessPublic, QMetaType::Void),
         // Method 'createGoal'
-        QtMocHelpers::MethodData<bool(const QString &, const QString &, const QString &, double, const QString &)>(87, 2, QMC::AccessPublic, QMetaType::Bool, {{
-            { QMetaType::QString, 55 }, { QMetaType::QString, 88 }, { QMetaType::QString, 89 }, { QMetaType::Double, 90 },
-            { QMetaType::QString, 91 },
+        QtMocHelpers::MethodData<bool(const QString &, const QString &, const QString &, double, const QString &)>(96, 2, QMC::AccessPublic, QMetaType::Bool, {{
+            { QMetaType::QString, 60 }, { QMetaType::QString, 97 }, { QMetaType::QString, 98 }, { QMetaType::Double, 99 },
+            { QMetaType::QString, 100 },
         }}),
         // Method 'deleteGoal'
-        QtMocHelpers::MethodData<bool(const QString &)>(92, 2, QMC::AccessPublic, QMetaType::Bool, {{
-            { QMetaType::QString, 64 },
+        QtMocHelpers::MethodData<bool(const QString &)>(101, 2, QMC::AccessPublic, QMetaType::Bool, {{
+            { QMetaType::QString, 69 },
         }}),
         // Method 'importWatchFile'
-        QtMocHelpers::MethodData<bool(const QString &, const QString &)>(93, 2, QMC::AccessPublic, QMetaType::Bool, {{
-            { QMetaType::QString, 70 }, { QMetaType::QString, 94 },
+        QtMocHelpers::MethodData<bool(const QString &, const QString &)>(102, 2, QMC::AccessPublic, QMetaType::Bool, {{
+            { QMetaType::QString, 75 }, { QMetaType::QString, 103 },
         }}),
         // Method 'generateRoute'
-        QtMocHelpers::MethodData<void(double, double, double, const QString &)>(95, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { QMetaType::Double, 96 }, { QMetaType::Double, 97 }, { QMetaType::Double, 57 }, { QMetaType::QString, 98 },
+        QtMocHelpers::MethodData<void(double, double, double, const QString &)>(104, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::Double, 105 }, { QMetaType::Double, 106 }, { QMetaType::Double, 62 }, { QMetaType::QString, 107 },
         }}),
         // Method 'buildRouteFromWaypoints'
-        QtMocHelpers::MethodData<void(const QVariantList &, const QString &)>(99, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { 0x80000000 | 100, 101 }, { QMetaType::QString, 41 },
+        QtMocHelpers::MethodData<void(const QVariantList &, const QString &)>(108, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { 0x80000000 | 109, 110 }, { QMetaType::QString, 46 },
         }}),
         // Method 'deleteRoute'
-        QtMocHelpers::MethodData<void(const QString &)>(102, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { QMetaType::QString, 103 },
+        QtMocHelpers::MethodData<void(const QString &)>(111, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::QString, 112 },
         }}),
         // Method 'setOpenAiKey'
-        QtMocHelpers::MethodData<void(const QString &)>(104, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { QMetaType::QString, 105 },
+        QtMocHelpers::MethodData<void(const QString &)>(113, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::QString, 114 },
         }}),
         // Method 'saveStravaCredentials'
-        QtMocHelpers::MethodData<void(const QString &, const QString &)>(106, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { QMetaType::QString, 107 }, { QMetaType::QString, 108 },
+        QtMocHelpers::MethodData<void(const QString &, const QString &)>(115, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::QString, 116 }, { QMetaType::QString, 117 },
         }}),
         // Method 'openStravaAuthUrl'
-        QtMocHelpers::MethodData<void()>(109, 2, QMC::AccessPublic, QMetaType::Void),
+        QtMocHelpers::MethodData<void()>(118, 2, QMC::AccessPublic, QMetaType::Void),
         // Method 'syncStrava'
-        QtMocHelpers::MethodData<void()>(110, 2, QMC::AccessPublic, QMetaType::Void),
+        QtMocHelpers::MethodData<void()>(119, 2, QMC::AccessPublic, QMetaType::Void),
         // Method 'disconnectStrava'
-        QtMocHelpers::MethodData<void()>(111, 2, QMC::AccessPublic, QMetaType::Void),
+        QtMocHelpers::MethodData<void()>(120, 2, QMC::AccessPublic, QMetaType::Void),
     };
     QtMocHelpers::UintData qt_properties {
         // property 'isLoggedIn'
-        QtMocHelpers::PropertyData<bool>(112, QMetaType::Bool, QMC::DefaultPropertyFlags, 0),
+        QtMocHelpers::PropertyData<bool>(121, QMetaType::Bool, QMC::DefaultPropertyFlags, 0),
         // property 'currentUserName'
-        QtMocHelpers::PropertyData<QString>(113, QMetaType::QString, QMC::DefaultPropertyFlags, 0),
+        QtMocHelpers::PropertyData<QString>(122, QMetaType::QString, QMC::DefaultPropertyFlags, 0),
         // property 'currentUserRole'
-        QtMocHelpers::PropertyData<QString>(114, QMetaType::QString, QMC::DefaultPropertyFlags, 0),
+        QtMocHelpers::PropertyData<QString>(123, QMetaType::QString, QMC::DefaultPropertyFlags, 0),
         // property 'canEditWorkouts'
-        QtMocHelpers::PropertyData<bool>(115, QMetaType::Bool, QMC::DefaultPropertyFlags, 0),
+        QtMocHelpers::PropertyData<bool>(124, QMetaType::Bool, QMC::DefaultPropertyFlags, 0),
         // property 'authError'
-        QtMocHelpers::PropertyData<QString>(116, QMetaType::QString, QMC::DefaultPropertyFlags, 5),
+        QtMocHelpers::PropertyData<QString>(125, QMetaType::QString, QMC::DefaultPropertyFlags, 5),
         // property 'monthLabel'
-        QtMocHelpers::PropertyData<QString>(117, QMetaType::QString, QMC::DefaultPropertyFlags, 8),
+        QtMocHelpers::PropertyData<QString>(126, QMetaType::QString, QMC::DefaultPropertyFlags, 8),
         // property 'athletes'
-        QtMocHelpers::PropertyData<QVariantList>(118, 0x80000000 | 100, QMC::DefaultPropertyFlags | QMC::EnumOrFlag, 9),
+        QtMocHelpers::PropertyData<QVariantList>(127, 0x80000000 | 109, QMC::DefaultPropertyFlags | QMC::EnumOrFlag, 9),
         // property 'selectedAthleteId'
-        QtMocHelpers::PropertyData<QString>(119, QMetaType::QString, QMC::DefaultPropertyFlags | QMC::Writable | QMC::StdCppSet, 10),
+        QtMocHelpers::PropertyData<QString>(128, QMetaType::QString, QMC::DefaultPropertyFlags | QMC::Writable | QMC::StdCppSet, 10),
         // property 'selectedAthleteName'
-        QtMocHelpers::PropertyData<QString>(120, QMetaType::QString, QMC::DefaultPropertyFlags, 10),
+        QtMocHelpers::PropertyData<QString>(129, QMetaType::QString, QMC::DefaultPropertyFlags, 10),
         // property 'selectedDateIso'
-        QtMocHelpers::PropertyData<QString>(121, QMetaType::QString, QMC::DefaultPropertyFlags, 11),
+        QtMocHelpers::PropertyData<QString>(130, QMetaType::QString, QMC::DefaultPropertyFlags, 11),
         // property 'selectedDayLabel'
-        QtMocHelpers::PropertyData<QString>(122, QMetaType::QString, QMC::DefaultPropertyFlags, 11),
+        QtMocHelpers::PropertyData<QString>(131, QMetaType::QString, QMC::DefaultPropertyFlags, 11),
         // property 'dayCells'
-        QtMocHelpers::PropertyData<QVariantList>(123, 0x80000000 | 100, QMC::DefaultPropertyFlags | QMC::EnumOrFlag, 8),
+        QtMocHelpers::PropertyData<QVariantList>(132, 0x80000000 | 109, QMC::DefaultPropertyFlags | QMC::EnumOrFlag, 8),
         // property 'selectedDayWorkouts'
-        QtMocHelpers::PropertyData<QVariantList>(124, 0x80000000 | 100, QMC::DefaultPropertyFlags | QMC::EnumOrFlag, 12),
+        QtMocHelpers::PropertyData<QVariantList>(133, 0x80000000 | 109, QMC::DefaultPropertyFlags | QMC::EnumOrFlag, 12),
         // property 'selectedWorkout'
-        QtMocHelpers::PropertyData<QVariantMap>(125, 0x80000000 | 126, QMC::DefaultPropertyFlags | QMC::EnumOrFlag, 13),
+        QtMocHelpers::PropertyData<QVariantMap>(134, 0x80000000 | 135, QMC::DefaultPropertyFlags | QMC::EnumOrFlag, 13),
         // property 'selectedWorkoutComments'
-        QtMocHelpers::PropertyData<QVariantList>(127, 0x80000000 | 100, QMC::DefaultPropertyFlags | QMC::EnumOrFlag, 14),
+        QtMocHelpers::PropertyData<QVariantList>(136, 0x80000000 | 109, QMC::DefaultPropertyFlags | QMC::EnumOrFlag, 14),
         // property 'analyticsSummary'
-        QtMocHelpers::PropertyData<QVariantMap>(128, 0x80000000 | 126, QMC::DefaultPropertyFlags | QMC::EnumOrFlag, 15),
+        QtMocHelpers::PropertyData<QVariantMap>(137, 0x80000000 | 135, QMC::DefaultPropertyFlags | QMC::EnumOrFlag, 15),
+        // property 'aiCoachReport'
+        QtMocHelpers::PropertyData<QVariantMap>(138, 0x80000000 | 135, QMC::DefaultPropertyFlags | QMC::EnumOrFlag, 16),
         // property 'analyticsPeriod'
-        QtMocHelpers::PropertyData<QString>(129, QMetaType::QString, QMC::DefaultPropertyFlags | QMC::Writable | QMC::StdCppSet, 16),
+        QtMocHelpers::PropertyData<QString>(139, QMetaType::QString, QMC::DefaultPropertyFlags | QMC::Writable | QMC::StdCppSet, 19),
         // property 'goals'
-        QtMocHelpers::PropertyData<QVariantList>(130, 0x80000000 | 100, QMC::DefaultPropertyFlags | QMC::EnumOrFlag, 17),
+        QtMocHelpers::PropertyData<QVariantList>(140, 0x80000000 | 109, QMC::DefaultPropertyFlags | QMC::EnumOrFlag, 20),
         // property 'routes'
-        QtMocHelpers::PropertyData<QVariantList>(131, 0x80000000 | 100, QMC::DefaultPropertyFlags | QMC::EnumOrFlag, 18),
+        QtMocHelpers::PropertyData<QVariantList>(141, 0x80000000 | 109, QMC::DefaultPropertyFlags | QMC::EnumOrFlag, 21),
         // property 'hasOpenAiKey'
-        QtMocHelpers::PropertyData<bool>(132, QMetaType::Bool, QMC::DefaultPropertyFlags, 19),
+        QtMocHelpers::PropertyData<bool>(142, QMetaType::Bool, QMC::DefaultPropertyFlags, 22),
         // property 'stravaConnected'
-        QtMocHelpers::PropertyData<bool>(133, QMetaType::Bool, QMC::DefaultPropertyFlags, 20),
+        QtMocHelpers::PropertyData<bool>(143, QMetaType::Bool, QMC::DefaultPropertyFlags, 23),
         // property 'stravaHasClientId'
-        QtMocHelpers::PropertyData<bool>(134, QMetaType::Bool, QMC::DefaultPropertyFlags, 20),
+        QtMocHelpers::PropertyData<bool>(144, QMetaType::Bool, QMC::DefaultPropertyFlags, 23),
         // property 'templateLibrary'
-        QtMocHelpers::PropertyData<QVariantList>(135, 0x80000000 | 100, QMC::DefaultPropertyFlags | QMC::EnumOrFlag, 23),
+        QtMocHelpers::PropertyData<QVariantList>(145, 0x80000000 | 109, QMC::DefaultPropertyFlags | QMC::EnumOrFlag, 26),
         // property 'createDialogOpen'
-        QtMocHelpers::PropertyData<bool>(136, QMetaType::Bool, QMC::DefaultPropertyFlags | QMC::Writable | QMC::StdCppSet, 24),
+        QtMocHelpers::PropertyData<bool>(146, QMetaType::Bool, QMC::DefaultPropertyFlags | QMC::Writable | QMC::StdCppSet, 27),
         // property 'draftDateIso'
-        QtMocHelpers::PropertyData<QString>(137, QMetaType::QString, QMC::DefaultPropertyFlags, 25),
+        QtMocHelpers::PropertyData<QString>(147, QMetaType::QString, QMC::DefaultPropertyFlags, 28),
         // property 'viewMode'
-        QtMocHelpers::PropertyData<QString>(138, QMetaType::QString, QMC::DefaultPropertyFlags | QMC::Writable | QMC::StdCppSet, 26),
+        QtMocHelpers::PropertyData<QString>(148, QMetaType::QString, QMC::DefaultPropertyFlags | QMC::Writable | QMC::StdCppSet, 29),
         // property 'categories'
-        QtMocHelpers::PropertyData<QStringList>(139, QMetaType::QStringList, QMC::DefaultPropertyFlags | QMC::Constant),
+        QtMocHelpers::PropertyData<QStringList>(149, QMetaType::QStringList, QMC::DefaultPropertyFlags | QMC::Constant),
         // property 'intensities'
-        QtMocHelpers::PropertyData<QStringList>(140, QMetaType::QStringList, QMC::DefaultPropertyFlags | QMC::Constant),
+        QtMocHelpers::PropertyData<QStringList>(150, QMetaType::QStringList, QMC::DefaultPropertyFlags | QMC::Constant),
         // property 'errorMessage'
-        QtMocHelpers::PropertyData<QString>(141, QMetaType::QString, QMC::DefaultPropertyFlags, 27),
+        QtMocHelpers::PropertyData<QString>(151, QMetaType::QString, QMC::DefaultPropertyFlags, 30),
         // property 'busy'
-        QtMocHelpers::PropertyData<bool>(142, QMetaType::Bool, QMC::DefaultPropertyFlags, 28),
+        QtMocHelpers::PropertyData<bool>(152, QMetaType::Bool, QMC::DefaultPropertyFlags, 31),
         // property 'serverUrl'
-        QtMocHelpers::PropertyData<QString>(143, QMetaType::QString, QMC::DefaultPropertyFlags | QMC::Writable | QMC::StdCppSet, 22),
+        QtMocHelpers::PropertyData<QString>(153, QMetaType::QString, QMC::DefaultPropertyFlags | QMC::Writable | QMC::StdCppSet, 25),
     };
     QtMocHelpers::UintData qt_enums {
     };
@@ -509,79 +551,88 @@ void WorkoutStore::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 13: _t->selectedWorkoutChanged(); break;
         case 14: _t->selectedWorkoutCommentsChanged(); break;
         case 15: _t->analyticsChanged(); break;
-        case 16: _t->analyticsPeriodChanged(); break;
-        case 17: _t->goalsChanged(); break;
-        case 18: _t->routesChanged(); break;
-        case 19: _t->openAiKeyChanged(); break;
-        case 20: _t->stravaStatusChanged(); break;
-        case 21: _t->stravaSyncDone((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
-        case 22: _t->serverUrlChanged(); break;
-        case 23: _t->templatesChanged(); break;
-        case 24: _t->createDialogOpenChanged(); break;
-        case 25: _t->draftChanged(); break;
-        case 26: _t->viewModeChanged(); break;
-        case 27: _t->errorChanged((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1]))); break;
-        case 28: _t->busyChanged(); break;
-        case 29: _t->workoutCreated(); break;
-        case 30: _t->initialLoad(); break;
-        case 31: _t->loginUser((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2]))); break;
-        case 32: _t->registerUser((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[3])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[4]))); break;
-        case 33: _t->logout(); break;
-        case 34: _t->clearAuthError(); break;
-        case 35: _t->linkAthlete((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1]))); break;
-        case 36: _t->goToToday(); break;
-        case 37: _t->prevMonth(); break;
-        case 38: _t->nextMonth(); break;
-        case 39: _t->selectDate((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1]))); break;
-        case 40: _t->openCreateDialogForDate((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1]))); break;
-        case 41: _t->cancelCreateDialog(); break;
-        case 42: { bool _r = _t->createWorkout((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast<std::add_pointer_t<double>>(_a[3])),(*reinterpret_cast<std::add_pointer_t<int>>(_a[4])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[5])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[6])),(*reinterpret_cast<std::add_pointer_t<bool>>(_a[7])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[8])));
+        case 16: _t->aiCoachReportChanged(); break;
+        case 17: _t->aiCoachPlanApplied((*reinterpret_cast<std::add_pointer_t<int>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<int>>(_a[2]))); break;
+        case 18: _t->aiCoachChatReply((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1]))); break;
+        case 19: _t->analyticsPeriodChanged(); break;
+        case 20: _t->goalsChanged(); break;
+        case 21: _t->routesChanged(); break;
+        case 22: _t->openAiKeyChanged(); break;
+        case 23: _t->stravaStatusChanged(); break;
+        case 24: _t->stravaSyncDone((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
+        case 25: _t->serverUrlChanged(); break;
+        case 26: _t->templatesChanged(); break;
+        case 27: _t->createDialogOpenChanged(); break;
+        case 28: _t->draftChanged(); break;
+        case 29: _t->viewModeChanged(); break;
+        case 30: _t->errorChanged((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1]))); break;
+        case 31: _t->busyChanged(); break;
+        case 32: _t->workoutCreated(); break;
+        case 33: _t->initialLoad(); break;
+        case 34: _t->loginUser((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2]))); break;
+        case 35: _t->registerUser((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[3])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[4]))); break;
+        case 36: _t->logout(); break;
+        case 37: _t->clearAuthError(); break;
+        case 38: _t->linkAthlete((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1]))); break;
+        case 39: _t->goToToday(); break;
+        case 40: _t->prevMonth(); break;
+        case 41: _t->nextMonth(); break;
+        case 42: _t->selectDate((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1]))); break;
+        case 43: _t->openCreateDialogForDate((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1]))); break;
+        case 44: _t->cancelCreateDialog(); break;
+        case 45: { bool _r = _t->createWorkout((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast<std::add_pointer_t<double>>(_a[3])),(*reinterpret_cast<std::add_pointer_t<int>>(_a[4])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[5])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[6])),(*reinterpret_cast<std::add_pointer_t<bool>>(_a[7])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[8])));
             if (_a[0]) *reinterpret_cast<bool*>(_a[0]) = std::move(_r); }  break;
-        case 43: { bool _r = _t->createWorkout((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast<std::add_pointer_t<double>>(_a[3])),(*reinterpret_cast<std::add_pointer_t<int>>(_a[4])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[5])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[6])),(*reinterpret_cast<std::add_pointer_t<bool>>(_a[7])));
+        case 46: { bool _r = _t->createWorkout((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast<std::add_pointer_t<double>>(_a[3])),(*reinterpret_cast<std::add_pointer_t<int>>(_a[4])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[5])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[6])),(*reinterpret_cast<std::add_pointer_t<bool>>(_a[7])));
             if (_a[0]) *reinterpret_cast<bool*>(_a[0]) = std::move(_r); }  break;
-        case 44: { bool _r = _t->createWorkout((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast<std::add_pointer_t<double>>(_a[3])),(*reinterpret_cast<std::add_pointer_t<int>>(_a[4])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[5])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[6])));
+        case 47: { bool _r = _t->createWorkout((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast<std::add_pointer_t<double>>(_a[3])),(*reinterpret_cast<std::add_pointer_t<int>>(_a[4])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[5])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[6])));
             if (_a[0]) *reinterpret_cast<bool*>(_a[0]) = std::move(_r); }  break;
-        case 45: { bool _r = _t->updateWorkout((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[3])),(*reinterpret_cast<std::add_pointer_t<double>>(_a[4])),(*reinterpret_cast<std::add_pointer_t<int>>(_a[5])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[6])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[7])),(*reinterpret_cast<std::add_pointer_t<bool>>(_a[8])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[9])));
+        case 48: { bool _r = _t->updateWorkout((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[3])),(*reinterpret_cast<std::add_pointer_t<double>>(_a[4])),(*reinterpret_cast<std::add_pointer_t<int>>(_a[5])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[6])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[7])),(*reinterpret_cast<std::add_pointer_t<bool>>(_a[8])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[9])));
             if (_a[0]) *reinterpret_cast<bool*>(_a[0]) = std::move(_r); }  break;
-        case 46: { bool _r = _t->updateWorkout((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[3])),(*reinterpret_cast<std::add_pointer_t<double>>(_a[4])),(*reinterpret_cast<std::add_pointer_t<int>>(_a[5])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[6])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[7])),(*reinterpret_cast<std::add_pointer_t<bool>>(_a[8])));
+        case 49: { bool _r = _t->updateWorkout((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[3])),(*reinterpret_cast<std::add_pointer_t<double>>(_a[4])),(*reinterpret_cast<std::add_pointer_t<int>>(_a[5])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[6])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[7])),(*reinterpret_cast<std::add_pointer_t<bool>>(_a[8])));
             if (_a[0]) *reinterpret_cast<bool*>(_a[0]) = std::move(_r); }  break;
-        case 47: { bool _r = _t->updateWorkout((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[3])),(*reinterpret_cast<std::add_pointer_t<double>>(_a[4])),(*reinterpret_cast<std::add_pointer_t<int>>(_a[5])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[6])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[7])));
+        case 50: { bool _r = _t->updateWorkout((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[3])),(*reinterpret_cast<std::add_pointer_t<double>>(_a[4])),(*reinterpret_cast<std::add_pointer_t<int>>(_a[5])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[6])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[7])));
             if (_a[0]) *reinterpret_cast<bool*>(_a[0]) = std::move(_r); }  break;
-        case 48: { bool _r = _t->deleteWorkout((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])));
+        case 51: { bool _r = _t->deleteWorkout((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])));
             if (_a[0]) *reinterpret_cast<bool*>(_a[0]) = std::move(_r); }  break;
-        case 49: _t->selectWorkout((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1]))); break;
-        case 50: { bool _r = _t->addComment((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])));
+        case 52: _t->selectWorkout((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1]))); break;
+        case 53: { bool _r = _t->addComment((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])));
             if (_a[0]) *reinterpret_cast<bool*>(_a[0]) = std::move(_r); }  break;
-        case 51: { bool _r = _t->markWorkoutStatus((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[3])));
+        case 54: { bool _r = _t->markWorkoutStatus((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[3])));
             if (_a[0]) *reinterpret_cast<bool*>(_a[0]) = std::move(_r); }  break;
-        case 52: { bool _r = _t->markWorkoutStatusDetailed((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[3])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[4])),(*reinterpret_cast<std::add_pointer_t<int>>(_a[5])));
+        case 55: { bool _r = _t->markWorkoutStatusDetailed((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[3])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[4])),(*reinterpret_cast<std::add_pointer_t<int>>(_a[5])));
             if (_a[0]) *reinterpret_cast<bool*>(_a[0]) = std::move(_r); }  break;
-        case 53: { bool _r = _t->saveTemplate((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast<std::add_pointer_t<double>>(_a[3])),(*reinterpret_cast<std::add_pointer_t<int>>(_a[4])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[5])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[6])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[7])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[8])));
+        case 56: { bool _r = _t->saveTemplate((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast<std::add_pointer_t<double>>(_a[3])),(*reinterpret_cast<std::add_pointer_t<int>>(_a[4])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[5])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[6])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[7])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[8])));
             if (_a[0]) *reinterpret_cast<bool*>(_a[0]) = std::move(_r); }  break;
-        case 54: { bool _r = _t->updateTemplate((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[3])),(*reinterpret_cast<std::add_pointer_t<double>>(_a[4])),(*reinterpret_cast<std::add_pointer_t<int>>(_a[5])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[6])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[7])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[8])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[9])));
+        case 57: { bool _r = _t->updateTemplate((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[3])),(*reinterpret_cast<std::add_pointer_t<double>>(_a[4])),(*reinterpret_cast<std::add_pointer_t<int>>(_a[5])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[6])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[7])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[8])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[9])));
             if (_a[0]) *reinterpret_cast<bool*>(_a[0]) = std::move(_r); }  break;
-        case 55: { bool _r = _t->deleteTemplate((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])));
+        case 58: { bool _r = _t->deleteTemplate((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])));
             if (_a[0]) *reinterpret_cast<bool*>(_a[0]) = std::move(_r); }  break;
-        case 56: { bool _r = _t->planFromTemplate((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2])));
+        case 59: { bool _r = _t->planFromTemplate((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2])));
             if (_a[0]) *reinterpret_cast<bool*>(_a[0]) = std::move(_r); }  break;
-        case 57: { bool _r = _t->canCurrentUserEditAthlete((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])));
+        case 60: _t->analyzeAthleteProgress((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
+        case 61: _t->analyzeAthleteProgress(); break;
+        case 62: _t->applyAiCoachPlan((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
+        case 63: _t->applyAiCoachPlan(); break;
+        case 64: _t->sendAiCoachMessage((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<int>>(_a[2]))); break;
+        case 65: _t->sendAiCoachMessage((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1]))); break;
+        case 66: { bool _r = _t->canCurrentUserEditAthlete((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])));
             if (_a[0]) *reinterpret_cast<bool*>(_a[0]) = std::move(_r); }  break;
-        case 58: _t->clearError(); break;
-        case 59: _t->refresh(); break;
-        case 60: { bool _r = _t->createGoal((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[3])),(*reinterpret_cast<std::add_pointer_t<double>>(_a[4])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[5])));
+        case 67: _t->clearError(); break;
+        case 68: _t->refresh(); break;
+        case 69: { bool _r = _t->createGoal((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[3])),(*reinterpret_cast<std::add_pointer_t<double>>(_a[4])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[5])));
             if (_a[0]) *reinterpret_cast<bool*>(_a[0]) = std::move(_r); }  break;
-        case 61: { bool _r = _t->deleteGoal((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])));
+        case 70: { bool _r = _t->deleteGoal((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])));
             if (_a[0]) *reinterpret_cast<bool*>(_a[0]) = std::move(_r); }  break;
-        case 62: { bool _r = _t->importWatchFile((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2])));
+        case 71: { bool _r = _t->importWatchFile((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2])));
             if (_a[0]) *reinterpret_cast<bool*>(_a[0]) = std::move(_r); }  break;
-        case 63: _t->generateRoute((*reinterpret_cast<std::add_pointer_t<double>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<double>>(_a[2])),(*reinterpret_cast<std::add_pointer_t<double>>(_a[3])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[4]))); break;
-        case 64: _t->buildRouteFromWaypoints((*reinterpret_cast<std::add_pointer_t<QVariantList>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2]))); break;
-        case 65: _t->deleteRoute((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1]))); break;
-        case 66: _t->setOpenAiKey((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1]))); break;
-        case 67: _t->saveStravaCredentials((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2]))); break;
-        case 68: _t->openStravaAuthUrl(); break;
-        case 69: _t->syncStrava(); break;
-        case 70: _t->disconnectStrava(); break;
+        case 72: _t->generateRoute((*reinterpret_cast<std::add_pointer_t<double>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<double>>(_a[2])),(*reinterpret_cast<std::add_pointer_t<double>>(_a[3])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[4]))); break;
+        case 73: _t->buildRouteFromWaypoints((*reinterpret_cast<std::add_pointer_t<QVariantList>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2]))); break;
+        case 74: _t->deleteRoute((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1]))); break;
+        case 75: _t->setOpenAiKey((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1]))); break;
+        case 76: _t->saveStravaCredentials((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2]))); break;
+        case 77: _t->openStravaAuthUrl(); break;
+        case 78: _t->syncStrava(); break;
+        case 79: _t->disconnectStrava(); break;
         default: ;
         }
     }
@@ -618,33 +669,39 @@ void WorkoutStore::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
             return;
         if (QtMocHelpers::indexOfMethod<void (WorkoutStore::*)()>(_a, &WorkoutStore::analyticsChanged, 15))
             return;
-        if (QtMocHelpers::indexOfMethod<void (WorkoutStore::*)()>(_a, &WorkoutStore::analyticsPeriodChanged, 16))
+        if (QtMocHelpers::indexOfMethod<void (WorkoutStore::*)()>(_a, &WorkoutStore::aiCoachReportChanged, 16))
             return;
-        if (QtMocHelpers::indexOfMethod<void (WorkoutStore::*)()>(_a, &WorkoutStore::goalsChanged, 17))
+        if (QtMocHelpers::indexOfMethod<void (WorkoutStore::*)(int , int )>(_a, &WorkoutStore::aiCoachPlanApplied, 17))
             return;
-        if (QtMocHelpers::indexOfMethod<void (WorkoutStore::*)()>(_a, &WorkoutStore::routesChanged, 18))
+        if (QtMocHelpers::indexOfMethod<void (WorkoutStore::*)(const QString & )>(_a, &WorkoutStore::aiCoachChatReply, 18))
             return;
-        if (QtMocHelpers::indexOfMethod<void (WorkoutStore::*)()>(_a, &WorkoutStore::openAiKeyChanged, 19))
+        if (QtMocHelpers::indexOfMethod<void (WorkoutStore::*)()>(_a, &WorkoutStore::analyticsPeriodChanged, 19))
             return;
-        if (QtMocHelpers::indexOfMethod<void (WorkoutStore::*)()>(_a, &WorkoutStore::stravaStatusChanged, 20))
+        if (QtMocHelpers::indexOfMethod<void (WorkoutStore::*)()>(_a, &WorkoutStore::goalsChanged, 20))
             return;
-        if (QtMocHelpers::indexOfMethod<void (WorkoutStore::*)(int )>(_a, &WorkoutStore::stravaSyncDone, 21))
+        if (QtMocHelpers::indexOfMethod<void (WorkoutStore::*)()>(_a, &WorkoutStore::routesChanged, 21))
             return;
-        if (QtMocHelpers::indexOfMethod<void (WorkoutStore::*)()>(_a, &WorkoutStore::serverUrlChanged, 22))
+        if (QtMocHelpers::indexOfMethod<void (WorkoutStore::*)()>(_a, &WorkoutStore::openAiKeyChanged, 22))
             return;
-        if (QtMocHelpers::indexOfMethod<void (WorkoutStore::*)()>(_a, &WorkoutStore::templatesChanged, 23))
+        if (QtMocHelpers::indexOfMethod<void (WorkoutStore::*)()>(_a, &WorkoutStore::stravaStatusChanged, 23))
             return;
-        if (QtMocHelpers::indexOfMethod<void (WorkoutStore::*)()>(_a, &WorkoutStore::createDialogOpenChanged, 24))
+        if (QtMocHelpers::indexOfMethod<void (WorkoutStore::*)(int )>(_a, &WorkoutStore::stravaSyncDone, 24))
             return;
-        if (QtMocHelpers::indexOfMethod<void (WorkoutStore::*)()>(_a, &WorkoutStore::draftChanged, 25))
+        if (QtMocHelpers::indexOfMethod<void (WorkoutStore::*)()>(_a, &WorkoutStore::serverUrlChanged, 25))
             return;
-        if (QtMocHelpers::indexOfMethod<void (WorkoutStore::*)()>(_a, &WorkoutStore::viewModeChanged, 26))
+        if (QtMocHelpers::indexOfMethod<void (WorkoutStore::*)()>(_a, &WorkoutStore::templatesChanged, 26))
             return;
-        if (QtMocHelpers::indexOfMethod<void (WorkoutStore::*)(const QString & )>(_a, &WorkoutStore::errorChanged, 27))
+        if (QtMocHelpers::indexOfMethod<void (WorkoutStore::*)()>(_a, &WorkoutStore::createDialogOpenChanged, 27))
             return;
-        if (QtMocHelpers::indexOfMethod<void (WorkoutStore::*)()>(_a, &WorkoutStore::busyChanged, 28))
+        if (QtMocHelpers::indexOfMethod<void (WorkoutStore::*)()>(_a, &WorkoutStore::draftChanged, 28))
             return;
-        if (QtMocHelpers::indexOfMethod<void (WorkoutStore::*)()>(_a, &WorkoutStore::workoutCreated, 29))
+        if (QtMocHelpers::indexOfMethod<void (WorkoutStore::*)()>(_a, &WorkoutStore::viewModeChanged, 29))
+            return;
+        if (QtMocHelpers::indexOfMethod<void (WorkoutStore::*)(const QString & )>(_a, &WorkoutStore::errorChanged, 30))
+            return;
+        if (QtMocHelpers::indexOfMethod<void (WorkoutStore::*)()>(_a, &WorkoutStore::busyChanged, 31))
+            return;
+        if (QtMocHelpers::indexOfMethod<void (WorkoutStore::*)()>(_a, &WorkoutStore::workoutCreated, 32))
             return;
     }
     if (_c == QMetaObject::ReadProperty) {
@@ -666,21 +723,22 @@ void WorkoutStore::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 13: *reinterpret_cast<QVariantMap*>(_v) = _t->selectedWorkout(); break;
         case 14: *reinterpret_cast<QVariantList*>(_v) = _t->selectedWorkoutComments(); break;
         case 15: *reinterpret_cast<QVariantMap*>(_v) = _t->analyticsSummary(); break;
-        case 16: *reinterpret_cast<QString*>(_v) = _t->analyticsPeriod(); break;
-        case 17: *reinterpret_cast<QVariantList*>(_v) = _t->goals(); break;
-        case 18: *reinterpret_cast<QVariantList*>(_v) = _t->routes(); break;
-        case 19: *reinterpret_cast<bool*>(_v) = _t->hasOpenAiKey(); break;
-        case 20: *reinterpret_cast<bool*>(_v) = _t->stravaConnected(); break;
-        case 21: *reinterpret_cast<bool*>(_v) = _t->stravaHasClientId(); break;
-        case 22: *reinterpret_cast<QVariantList*>(_v) = _t->templateLibrary(); break;
-        case 23: *reinterpret_cast<bool*>(_v) = _t->createDialogOpen(); break;
-        case 24: *reinterpret_cast<QString*>(_v) = _t->draftDateIso(); break;
-        case 25: *reinterpret_cast<QString*>(_v) = _t->viewMode(); break;
-        case 26: *reinterpret_cast<QStringList*>(_v) = _t->categories(); break;
-        case 27: *reinterpret_cast<QStringList*>(_v) = _t->intensities(); break;
-        case 28: *reinterpret_cast<QString*>(_v) = _t->errorMessage(); break;
-        case 29: *reinterpret_cast<bool*>(_v) = _t->busy(); break;
-        case 30: *reinterpret_cast<QString*>(_v) = _t->serverUrl(); break;
+        case 16: *reinterpret_cast<QVariantMap*>(_v) = _t->aiCoachReport(); break;
+        case 17: *reinterpret_cast<QString*>(_v) = _t->analyticsPeriod(); break;
+        case 18: *reinterpret_cast<QVariantList*>(_v) = _t->goals(); break;
+        case 19: *reinterpret_cast<QVariantList*>(_v) = _t->routes(); break;
+        case 20: *reinterpret_cast<bool*>(_v) = _t->hasOpenAiKey(); break;
+        case 21: *reinterpret_cast<bool*>(_v) = _t->stravaConnected(); break;
+        case 22: *reinterpret_cast<bool*>(_v) = _t->stravaHasClientId(); break;
+        case 23: *reinterpret_cast<QVariantList*>(_v) = _t->templateLibrary(); break;
+        case 24: *reinterpret_cast<bool*>(_v) = _t->createDialogOpen(); break;
+        case 25: *reinterpret_cast<QString*>(_v) = _t->draftDateIso(); break;
+        case 26: *reinterpret_cast<QString*>(_v) = _t->viewMode(); break;
+        case 27: *reinterpret_cast<QStringList*>(_v) = _t->categories(); break;
+        case 28: *reinterpret_cast<QStringList*>(_v) = _t->intensities(); break;
+        case 29: *reinterpret_cast<QString*>(_v) = _t->errorMessage(); break;
+        case 30: *reinterpret_cast<bool*>(_v) = _t->busy(); break;
+        case 31: *reinterpret_cast<QString*>(_v) = _t->serverUrl(); break;
         default: break;
         }
     }
@@ -688,10 +746,10 @@ void WorkoutStore::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         void *_v = _a[0];
         switch (_id) {
         case 7: _t->setSelectedAthleteId(*reinterpret_cast<QString*>(_v)); break;
-        case 16: _t->setAnalyticsPeriod(*reinterpret_cast<QString*>(_v)); break;
-        case 23: _t->setCreateDialogOpen(*reinterpret_cast<bool*>(_v)); break;
-        case 25: _t->setViewMode(*reinterpret_cast<QString*>(_v)); break;
-        case 30: _t->setServerUrl(*reinterpret_cast<QString*>(_v)); break;
+        case 17: _t->setAnalyticsPeriod(*reinterpret_cast<QString*>(_v)); break;
+        case 24: _t->setCreateDialogOpen(*reinterpret_cast<bool*>(_v)); break;
+        case 26: _t->setViewMode(*reinterpret_cast<QString*>(_v)); break;
+        case 31: _t->setServerUrl(*reinterpret_cast<QString*>(_v)); break;
         default: break;
         }
     }
@@ -716,20 +774,20 @@ int WorkoutStore::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 71)
+        if (_id < 80)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 71;
+        _id -= 80;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 71)
+        if (_id < 80)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 71;
+        _id -= 80;
     }
     if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty
             || _c == QMetaObject::ResetProperty || _c == QMetaObject::BindableProperty
             || _c == QMetaObject::RegisterPropertyMetaType) {
         qt_static_metacall(this, _c, _id, _a);
-        _id -= 31;
+        _id -= 32;
     }
     return _id;
 }
@@ -831,86 +889,104 @@ void WorkoutStore::analyticsChanged()
 }
 
 // SIGNAL 16
-void WorkoutStore::analyticsPeriodChanged()
+void WorkoutStore::aiCoachReportChanged()
 {
     QMetaObject::activate(this, &staticMetaObject, 16, nullptr);
 }
 
 // SIGNAL 17
-void WorkoutStore::goalsChanged()
+void WorkoutStore::aiCoachPlanApplied(int _t1, int _t2)
 {
-    QMetaObject::activate(this, &staticMetaObject, 17, nullptr);
+    QMetaObject::activate<void>(this, &staticMetaObject, 17, nullptr, _t1, _t2);
 }
 
 // SIGNAL 18
-void WorkoutStore::routesChanged()
+void WorkoutStore::aiCoachChatReply(const QString & _t1)
 {
-    QMetaObject::activate(this, &staticMetaObject, 18, nullptr);
+    QMetaObject::activate<void>(this, &staticMetaObject, 18, nullptr, _t1);
 }
 
 // SIGNAL 19
-void WorkoutStore::openAiKeyChanged()
+void WorkoutStore::analyticsPeriodChanged()
 {
     QMetaObject::activate(this, &staticMetaObject, 19, nullptr);
 }
 
 // SIGNAL 20
-void WorkoutStore::stravaStatusChanged()
+void WorkoutStore::goalsChanged()
 {
     QMetaObject::activate(this, &staticMetaObject, 20, nullptr);
 }
 
 // SIGNAL 21
-void WorkoutStore::stravaSyncDone(int _t1)
+void WorkoutStore::routesChanged()
 {
-    QMetaObject::activate<void>(this, &staticMetaObject, 21, nullptr, _t1);
+    QMetaObject::activate(this, &staticMetaObject, 21, nullptr);
 }
 
 // SIGNAL 22
-void WorkoutStore::serverUrlChanged()
+void WorkoutStore::openAiKeyChanged()
 {
     QMetaObject::activate(this, &staticMetaObject, 22, nullptr);
 }
 
 // SIGNAL 23
-void WorkoutStore::templatesChanged()
+void WorkoutStore::stravaStatusChanged()
 {
     QMetaObject::activate(this, &staticMetaObject, 23, nullptr);
 }
 
 // SIGNAL 24
-void WorkoutStore::createDialogOpenChanged()
+void WorkoutStore::stravaSyncDone(int _t1)
 {
-    QMetaObject::activate(this, &staticMetaObject, 24, nullptr);
+    QMetaObject::activate<void>(this, &staticMetaObject, 24, nullptr, _t1);
 }
 
 // SIGNAL 25
-void WorkoutStore::draftChanged()
+void WorkoutStore::serverUrlChanged()
 {
     QMetaObject::activate(this, &staticMetaObject, 25, nullptr);
 }
 
 // SIGNAL 26
-void WorkoutStore::viewModeChanged()
+void WorkoutStore::templatesChanged()
 {
     QMetaObject::activate(this, &staticMetaObject, 26, nullptr);
 }
 
 // SIGNAL 27
-void WorkoutStore::errorChanged(const QString & _t1)
+void WorkoutStore::createDialogOpenChanged()
 {
-    QMetaObject::activate<void>(this, &staticMetaObject, 27, nullptr, _t1);
+    QMetaObject::activate(this, &staticMetaObject, 27, nullptr);
 }
 
 // SIGNAL 28
-void WorkoutStore::busyChanged()
+void WorkoutStore::draftChanged()
 {
     QMetaObject::activate(this, &staticMetaObject, 28, nullptr);
 }
 
 // SIGNAL 29
-void WorkoutStore::workoutCreated()
+void WorkoutStore::viewModeChanged()
 {
     QMetaObject::activate(this, &staticMetaObject, 29, nullptr);
+}
+
+// SIGNAL 30
+void WorkoutStore::errorChanged(const QString & _t1)
+{
+    QMetaObject::activate<void>(this, &staticMetaObject, 30, nullptr, _t1);
+}
+
+// SIGNAL 31
+void WorkoutStore::busyChanged()
+{
+    QMetaObject::activate(this, &staticMetaObject, 31, nullptr);
+}
+
+// SIGNAL 32
+void WorkoutStore::workoutCreated()
+{
+    QMetaObject::activate(this, &staticMetaObject, 32, nullptr);
 }
 QT_WARNING_POP
